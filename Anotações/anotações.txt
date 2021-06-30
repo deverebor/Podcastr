@@ -65,3 +65,7 @@ O SSR é um conceito que já vem sendo utilizado a muito tempo, que é o back-en
 O NextJS vai pegar os dados em JSON que vieram do back-end e vai converter esses dados para HTML ou para a estrutura de dados que esteja sendo utilizado, esses dados chegaram prontos para o browser já no formato de HTML, ou seja, o Service Side Render quer dizer que a criação da interface ela está acontecendo pelo server side passando do back-end para o next.js sendo que um é cria a nossa interface -> Next e o outro armazena nossa regra de negócio a nossa API. 
 
 O SSG faz uso de um "cache"(salvar em disco) de um resultado de listagem de usuários e quando outra pessoa acessar a página em um intervalo de tempo que a nós definimos essa página vai retornar o mesmo contúdo e é utilizado para criar aplicações performáticas. 
+
+-----------------------------------------------------------------------------------
+AULA 02
+
