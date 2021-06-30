@@ -1,1 +1,67 @@
-Teste teste
+Aula 01 - React e Next.js
+
+Projeto no figma: https://www.figma.com/file/c2RUt24VHsW88Y3R1s8fgl/Next-Level-Week-5-ReactJS?node-id=160%3A2761
+
+Oque será aprendido nessa NLW:
+Geração estática de websites;
+Context API;
+Como trabalhar com elementos nativos html em conjunto com o ReactJS;
+Next.js
+
+Fluxo básico de uma API
+O back-end ele é/era responsável por muita coisa, toda a parte de regras de negócio, acesso ao banco, comunicação com serviços, pagamento, gerenciar autenticação além disso por muito tempo ficou responsável pela parte de visualização da aplicação.
+
+A partir do momento que o back-end possui uma API que fornece dados e etc é chamado de API RESTful.
+
+Quando se utiliza netx.js não se utiliza o create-react-app, pois são duas formas diferentes de se inicializar um projeto react. O next.js é um framework e não só um template de projetos react, além de trazer o ambiente pronto para codar a aplicação react ele traz também funcionalidades que não possuímos no react puro.
+
+Além do yarn install create-react-app também pode-se utilizar o npx create-react-app nome_da_aplicação vai criar uma pasta com todas as dependências. 
+
+Com a utilização do react a aplicação é sempre carregada no lado do cliente utilizando o JavaScript.
+
+Conceitos do React:
+
+*Componente* (App.js) nada mais um função que se retorna HTML.
+*Propriedade* é uma informação que se passa de um componente para outro.
+*Estado* é uma forma de se manipular informações de dentro do componente.
+
+
+No react eu não posso ter um elemento ao lado do outro exemplo o <Button /> é necessário colocar uma div entorno deles, mas, para resolver esse problema é possível utilizando fragment que é uma tag invisível <> </> em torno dos elementos que resolve esse problema. 
+
+Todo componente como ele é uma função, recebe como primeiro parâmetro as propriedades que estão sendo repassadas para essa função:
+
+export default function Button(*props*){
+  return (
+    <button>Botão</button>
+  )
+}
+
+Essa propriedade é um objeto JavaScript que se passa para o elemento em si, nesse caso o botão.
+
+Toda vez que for necessário mostrar uma variável JavaScript dentro do HTML se coloca as chaves em volta {variável}
+
+No react existe uma própriedade que é global a children. Uma propriedade children no JavaScript é uma tag e/ou atributo interno a um pai. EX:
+
+<div> <- Pai
+  <h1> </h1> <- Filho
+</div>
+
+Essa informação de um children é definida automaticamente pelo react, sempre que é passado uma informação dentro de um componente eu posso acessar essa informação através do props.*children* EX:
+
+export default function Button(props){
+  return (
+    <button>{*props.children*}</button>
+  )
+}
+
+O estado é uma informação que se armazena no componente para que toda vez que o usuário realizar uma ação dentro do componente esse valor possa ser alterado.
+
+SEO = Search Engine Optimization
+ É um conjunto de técnicas que visa posicionar uma página nos primeiros resultados de mecanismos de busca online, como o Google. As principais ações que fazem parte de uma estratégia de SEO são: criação de conteúdo, SEO onpage, construção de autoridade e experiência do usuário.
+
+Como o react.js faz a renderização do conteúdo do lado do cliente esse é o maior problema dele. Essa dificuldade faz com que as páginas feitas sofram com o SEO e para isso surgiu algumas stacks para resolver esse problema, como o NextJS (Focado em SSR, SSG e SPA) e o GatsbyJS (Focado em SSG). Essas duas ferramentas estão basiadas em dois conceitos o SSR (Server Side Render) e SSG (Static Site Generation).
+
+O SSR é um conceito que já vem sendo utilizado a muito tempo, que é o back-end retornar o html pronto. Ele continua retornando os dados em JSON (JavaScript Object Notation), mas a sua grande diferença é que os dados de JSON não são devolvidos diretamente para o browser agora existe mais 1 camada que é o servidor do NextJS.
+O NextJS vai pegar os dados em JSON que vieram do back-end e vai converter esses dados para HTML ou para a estrutura de dados que esteja sendo utilizado, esses dados chegaram prontos para o browser já no formato de HTML, ou seja, o Service Side Render quer dizer que a criação da interface ela está acontecendo pelo server side passando do back-end para o next.js sendo que um é cria a nossa interface -> Next e o outro armazena nossa regra de negócio a nossa API. 
+
+O SSG faz uso de um "cache"(salvar em disco) de um resultado de listagem de usuários e quando outra pessoa acessar a página em um intervalo de tempo que a nós definimos essa página vai retornar o mesmo contúdo e é utilizado para criar aplicações performáticas. 
