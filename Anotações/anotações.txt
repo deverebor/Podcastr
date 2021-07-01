@@ -160,3 +160,11 @@ export async function getStaticProps() {
     revalidade: 60 * 60 * 8, => A cada 8hrs(3 vezes ao dia será gerado) quando uma nova pessoa acessar meu site será gerado um novo HTML estático.
   }
 }
+
+Para iniciar o server se utilizar 
+
+yarn server
+
+-----------------------------------------------------------------------------------
+AULA 03
+
