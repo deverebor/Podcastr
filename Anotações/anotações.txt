@@ -69,3 +69,94 @@ O SSG faz uso de um "cache"(salvar em disco) de um resultado de listagem de usu�
 -----------------------------------------------------------------------------------
 AULA 02
 
+rem para estilização é melhor para a acessibilidade. 
+
+1rem = tamanho do font-size do html.
+1em = tamanho do elemento envolta do texto.
+
+vh no css = viewport height o máximo da altura da tela.
+
+Por padrão o html vem com 16px de tamanho.
+
+[global.scss => Linha 24] Regra de acessibilidade.
+
+Sempre que uma página é carregada ela puxa o conteúdo do _app.tsx para ela, então configurações como fonts e afins não são interessantes de se colocar no app. Para resolver esse problema criamos o _document.tsx que funciona no next da mesma forma que o index.html do create-react-app, nele colocamos todas as estilizações e conteúdos importantes*
+
+No next os arquivos de estilização são salvos com o .modules EX:
+
+styles.modules.scss
+
+Os estilos salvos dentro desse arquivo nunca serão compartilhados pelos outros arquivos, será unicamente exclusivo do componente em questão.
+
+Para lhe dar com datas no JavaScript é interessante utilizar a biblioteca date-fns, ela vem com umas funcionalidades a mais.
+
+[Header(index.tsx) => Linha 7] Formatando o tipo de data.
+
+o server.json é a API que está alimentando meu app. Nela contem todos os eps do podcast FalaDev da rocketseat
+
+Esses dados da api não será importado diretamente do server.json na minha aplicação, oque vai ser feito é utilizar o json-server. O jason-server é uma ferramenta utiliza para quando se está desenvolvendo o front=end e ainda não tem o back-end precisa de uma Fake-API para ir criando o projeto consumindo uma api. Essa ferramenta pega o meu arquivo json e converte em uma API com listagem, filtro, relacionamento, paginação e etc *NÃO DEVE SER USADO EM PRODUÇÃO* é somente para testes sem um back-end feito.
+
+Dentro do meu packge.json eu fiz a seguinte modificação:
+
+"server": "json-server server.json -w -d 750 -p 3333"
+
+-w: watch time
+-d: delay de 750ms para carregar a API
+-p: api aberta na porta 3333
+
+para startar minha API utiliza o 
+
+yarn server
+
+[index.tsx] Existem 2 formas de se consumir uma API no NextJS e uma padrão para o React:
+
+1 - Funciona em qualquer projeto React (SPA) => 
+
+export default function Home() {
+  useEffect(() => {
+    fetch('http://localhost:3333/episodes')
+    .then(response => response.json())
+    .then(data => console.log(data)) => vendo os dados serem exibidos no console.
+  }, [])
+
+  Os dados só estão sendo carregados no momento que a pessoa carrega a tela. O problema de utilizar esse método é a indexação SEO da aplicação. 
+
+2 - API no NextJS (SSR) => 
+
+Vai ser exultado TODA VEZ que alguém acessar nossa aplicação
+Para fazer dessa forma basta dentro de qualquer arquivo na pasta /pages seja exportado uma função:
+
+export async function getServerSideProps() {
+  const response = await fetch('http://localhost:3333/episodes')
+  const data = await response.json()
+
+  return {
+    props: {
+      episodes: data,
+
+    }
+  }
+}
+
+Os dados já vão está na aplicação, não será necessário fazer requisição para o back-end.
+
+3 - API no NextJS (SSG) =>
+
+Vai ser exultado UMA ÚNICA VEZ que alguém acessar nossa aplicação. É utilizado quando não há alterações a todo momento na aplicação, por exemplo se um podcast sair 1 ep por dia não a necessidade de se utilizar o SSR para atualizar as informações a todo momento e sim utilizar o SSG, para ficar armazenado no cache.
+
+Assim que uma pessoa acessar minha página será gerado um HTML estático da minha aplicação e essa versão estática que é um HTML puro é servido para todas as pessoas que acessarem minha página após uma pessoa pelo período de tempo que foi definido no *revalidade:*. 
+
+Para fazer dessa forma basta dentro de qualquer arquivo na pasta /pages seja exportado uma função:
+
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:3333/episodes')
+  const data = await response.json()
+
+  return {
+    props: {
+      episodes: data,
+
+    },
+    revalidade: 60 * 60 * 8, => A cada 8hrs(3 vezes ao dia será gerado) quando uma nova pessoa acessar meu site será gerado um novo HTML estático.
+  }
+}
